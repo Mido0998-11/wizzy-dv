@@ -1,62 +1,164 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wizzy Unban System</title>
+    <title>إمبراطورية ويزي - فك الحظر</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0e1621; color: white; text-align: center; padding: 40px 20px; margin: 0; }
-        .card { background: #17212b; border-radius: 20px; padding: 30px; border: 1px solid #2b5278; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 400px; margin: auto; }
-        h2 { color: #5288c1; margin-bottom: 5px; }
-        .phone { font-size: 26px; color: #00ff00; font-weight: bold; margin: 25px 0; letter-spacing: 2px; }
-        .btn { background: #2481cc; color: white; border: none; padding: 18px; border-radius: 12px; font-size: 20px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
-        .btn:active { transform: scale(0.95); background: #1c66a0; }
-        .footer { margin-top: 40px; font-size: 13px; color: #6c7883; }
-        .steps { text-align: right; font-size: 14px; color: #abb1b8; margin-top: 20px; line-height: 1.6; }
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-green: #39ff14;
+            --bg-dark: #050a10;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(23, 33, 43, 0.9);
+            padding: 40px 30px;
+            border-radius: 25px;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .crown {
+            font-size: 50px;
+            display: block;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px gold);
+        }
+
+        p {
+            color: #abb1b8;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: #0e1621;
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        input:focus {
+            box-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue);
+            border-color: white;
+        }
+
+        .btn-send {
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.4s;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .btn-send:hover {
+            background: var(--neon-green);
+            color: black;
+            box-shadow: 0 0 30px var(--neon-green), 0 0 50px var(--neon-green);
+        }
+
+        .instructions {
+            margin-top: 25px;
+            text-align: right;
+            font-size: 12px;
+            color: #6c7883;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            color: var(--neon-blue);
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>إمبراطورية ويزي 👑</h2>
-        <p>نظام فك حظر واتساب العالمي</p>
-        
-        <div id="phone-display" class="phone">جاري التحميل...</div>
-        
-        <button class="btn" onclick="sendEmail()">إرسال طلب فك الحظر ✅</button>
-        
-        <div class="steps">
-            • اضغط على الزر الأزرق فوق.<br>
-            • حيفتح ليك تطبيق الجيميل (Gmail).<br>
-            • اضغط على سهم الإرسال الأزرق وبس.
-        </div>
+
+<div class="container">
+    <span class="crown">👑</span>
+    <h1>إمبراطورية ويزي</h1>
+    <p>أدخل رقمك المحظور بالصيغة الدولية</p>
+
+    <input type="tel" id="phoneInput" placeholder="+249..." maxlength="16">
+
+    <button class="btn-send" onclick="generateEmail()">إرسال طلب فك الحظر ✅</button>
+
+    <div class="instructions">
+        • اكتب رقمك بشكل صحيح.<br>
+        • اضغط إرسال وسيفتح لك الجيميل.<br>
+        • اضغط سهم الإرسال الأزرق في بريدك وبس.
     </div>
-    <div class="footer">المطور: Wizzy | @wizzy_dv_sd</div>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand(); // يخلي الموقع يفتح بملء الشاشة
+    <div class="footer">Wizzy Developer | @wizzy_dv_sd</div>
+</div>
 
-        // جلب الرقم من رابط الموقع (مثلاً ?phone=+249...)
-        const urlParams = new URLSearchParams(window.location.search);
-        const phone = urlParams.get('phone') || "رقم غير معروف";
-        document.getElementById('phone-display').innerText = phone;
+<script>
+    function generateEmail() {
+        const phone = document.getElementById('phoneInput').value.trim();
+        
+        if (!phone || phone.length < 9) {
+            alert("يا بطل، من فضلك اكتب الرقم أولاً!");
+            return;
+        }
 
-        function sendEmail() {
-            const email = "support@support.whatsapp.com";
-            const subject = "I am facing a problem after the latest update of WhatsApp";
-            const body = `Hello WhatsApp Support, 
+        const email = "support@support.whatsapp.com";
+        const subject = "I am facing a problem after the latest update of WhatsApp";
+        
+        const body = `Hello WhatsApp Support, 
 
 I am contacting you to report an issue I am facing after the latest WhatsApp update. When I try to log in to my WhatsApp account, I receive a message saying that login is currently unavailable for security reasons. We cannot allow you to log in at this time. I did not do anything unusual, nor did I receive any warnings or notifications about any security issues. 
 
-Please help resolve this issue and help me regain access to my account.
+Please help resolve this issue and help me regain access to my account. I use WhatsApp on a daily basis, and I rely It is important to communicate with my friends and family. This problem causes me great problems and I ask you to solve it as soon as possible. I make sure that I am using the correct password, and that I am using the correct phone number. I have not tried to log in from any other device, and I have not tried to change the password Please check My account and checking for any security issues that may be causing this issue.
 
 My Phone Number: ${phone}`;
 
-            // تحويل المستخدم للجيميل مع الرسالة كاملة
-            const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoUrl;
-        }
-    </script>
+        const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        // فتح الجيميل
+        window.location.href = mailtoUrl;
+    }
+</script>
+
 </body>
 </html>
