@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية ويزي - فك الحظر</title>
+    <title>إمبراطورية ويزي - فك الحظر الملكي</title>
     <style>
         :root {
             --neon-blue: #00f2ff;
             --neon-green: #39ff14;
+            --neon-pink: #ff00ff;
             --bg-dark: #050a10;
         }
 
@@ -18,127 +19,220 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* عشان الحركة ما تطلع بره الشاشة */
         }
 
         .container {
-            background: rgba(23, 33, 43, 0.9);
+            background: rgba(23, 33, 43, 0.95);
             padding: 40px 30px;
-            border-radius: 25px;
+            border-radius: 30px;
             border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+            box-shadow: 0 0 25px var(--neon-blue), inset 0 0 15px var(--neon-blue);
             text-align: center;
-            max-width: 400px;
+            max-width: 420px;
             width: 90%;
             position: relative;
+            margin: 20px;
+            animation: containerGlow 5s infinite alternate; /* نبض خفيف للمستوع نفسه */
         }
 
+        /* ✨ تحريك التاج الإمبراطوري ✨ */
+        .crown {
+            font-size: 55px;
+            display: block;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px gold);
+            animation: crownPulse 3s infinite alternate;
+        }
+
+        /* ✨ تحريك العنوان الرئيسي ✨ */
         h1 {
             color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
-            font-size: 28px;
-            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            font-size: 26px;
+            margin-bottom: 5px;
+            animation: textGlowBlue 4s infinite alternate;
         }
 
-        .crown {
-            font-size: 50px;
-            display: block;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px gold);
-        }
-
-        p {
-            color: #abb1b8;
-            font-size: 14px;
-            margin-bottom: 25px;
+        .phone-input-section {
+            margin: 25px 0;
         }
 
         input {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: #0e1621;
             border: 2px solid var(--neon-blue);
-            border-radius: 12px;
+            border-radius: 15px;
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             text-align: center;
             box-sizing: border-box;
             outline: none;
-            transition: 0.3s;
-            margin-bottom: 20px;
-            box-shadow: 0 0 5px var(--neon-blue);
+            transition: 0.4s;
+            box-shadow: 0 0 10px var(--neon-blue);
         }
 
         input:focus {
-            box-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
             border-color: white;
         }
 
+        /* ✨ تحريك زر الإرسال الملكي ✨ */
         .btn-send {
             background: transparent;
             color: var(--neon-green);
             border: 2px solid var(--neon-green);
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 18px;
+            padding: 18px;
+            border-radius: 15px;
+            font-size: 20px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
             transition: 0.4s;
-            text-transform: uppercase;
-            box-shadow: 0 0 10px var(--neon-green);
+            box-shadow: 0 0 15px var(--neon-green);
+            margin-top: 10px;
+            animation: buttonGlowGreen 2s infinite alternate;
         }
 
         .btn-send:hover {
             background: var(--neon-green);
             color: black;
-            box-shadow: 0 0 30px var(--neon-green), 0 0 50px var(--neon-green);
+            box-shadow: 0 0 30px var(--neon-green), 0 0 60px var(--neon-green);
         }
 
         .instructions {
             margin-top: 25px;
             text-align: right;
-            font-size: 12px;
-            color: #6c7883;
-            line-height: 1.6;
+            font-size: 13px;
+            color: #abb1b8;
+            line-height: 1.8;
+            border-right: 3px solid var(--neon-blue);
+            padding-right: 10px;
+            animation: borderPulseBlue 6s infinite alternate;
         }
 
+        /* 👑 قسم الحقوق والواتساب المتحرك 👑 */
         .footer {
-            margin-top: 30px;
-            font-size: 11px;
-            color: var(--neon-blue);
-            opacity: 0.7;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(82, 136, 193, 0.3);
+            overflow: hidden; /* مهم لحركة الاسم */
         }
+
+        .dev-name {
+            font-size: 16px;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            animation: marquee 10s linear infinite; /* حركة الاسم ببطء */
+            white-space: nowrap; /* عشان ما ينزل سطر جديد */
+        }
+
+        .whatsapp-link {
+            display: inline-block;
+            color: var(--neon-green);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: 1px solid var(--neon-green);
+            border-radius: 20px;
+            transition: 0.3s;
+            box-shadow: 0 0 5px var(--neon-green);
+            animation: textGlowGreen 3s infinite alternate;
+        }
+
+        .whatsapp-link:hover {
+            background: var(--neon-green);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        /* ✨ تعريف الحركات (Animations) ✨ */
+
+        /* 1. تموج التاج */
+        @keyframes crownPulse {
+            from { filter: drop-shadow(0 0 10px gold); }
+            to { filter: drop-shadow(0 0 25px gold) translateY(-5px); }
+        }
+
+        /* 2. تموج النص الأزرق */
+        @keyframes textGlowBlue {
+            from { text-shadow: 0 0 10px var(--neon-blue); }
+            to { text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue); }
+        }
+
+        /* 3. تموج الزر الأخضر */
+        @keyframes buttonGlowGreen {
+            from { box-shadow: 0 0 10px var(--neon-green); }
+            to { box-shadow: 0 0 25px var(--neon-green), 0 0 40px var(--neon-green); }
+        }
+
+        /* 4. تموج النص الأخضر (واتساب) */
+        @keyframes textGlowGreen {
+            from { text-shadow: 0 0 5px var(--neon-green); box-shadow: 0 0 5px var(--neon-green); }
+            to { text-shadow: 0 0 15px var(--neon-green), 0 0 20px var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
+        }
+
+        /* 5. تموج الحافة الجانبية للتعليمات */
+        @keyframes borderPulseBlue {
+            from { border-color: var(--neon-blue); }
+            to { border-color: white; border-right-width: 5px; }
+        }
+
+        /* 6. حركة الاسم ببطء (Marquee) */
+        @keyframes marquee {
+            0% { transform: translateX(-100%); } /* يبدأ من خارج الشاشة على اليمين */
+            100% { transform: translateX(100%); } /* ينتهي خارج الشاشة على الشمال */
+        }
+
+        /* 7. نبض المستوع نفسه */
+        @keyframes containerGlow {
+            0% { box-shadow: 0 0 20px var(--neon-blue), inset 0 0 10px var(--neon-blue); }
+            100% { box-shadow: 0 0 35px var(--neon-blue), inset 0 0 20px var(--neon-blue); border-color: white; }
+        }
+
     </style>
 </head>
 <body>
 
 <div class="container">
     <span class="crown">👑</span>
-    <h1>إمبراطورية ويزي</h1>
-    <p>أدخل رقمك المحظور بالصيغة الدولية</p>
+    <h1 style="color: white; text-shadow: 0 0 5px var(--neon-blue);">إمبراطورية ويزي</h1>
+    <p style="color: #6c7883; font-size: 14px;">نظام فك حظر واتساب العالمي</p>
 
-    <input type="tel" id="phoneInput" placeholder="+249..." maxlength="16">
-
-    <button class="btn-send" onclick="generateEmail()">إرسال طلب فك الحظر ✅</button>
-
-    <div class="instructions">
-        • اكتب رقمك بشكل صحيح.<br>
-        • اضغط إرسال وسيفتح لك الجيميل.<br>
-        • اضغط سهم الإرسال الأزرق في بريدك وبس.
+    <div class="phone-input-section">
+        <input type="tel" id="phoneInput" placeholder="+249..." maxlength="16">
+        <button class="btn-send" onclick="generateEmail()">إرسال الطلب الملكي ✅</button>
     </div>
 
-    <div class="footer">Wizzy Developer | @wizzy_dv_sd</div>
+    <div class="instructions">
+        💎 اكتب رقمك المحظور بالصيغة الدولية.<br>
+        💎 اضغط إرسال وسيفتح لك الجيميل تلقائياً.<br>
+        💎 اضغط على سهم الإرسال الأزرق وبس.
+    </div>
+
+    <div class="footer">
+        <div class="dev-name">
+            ꧁ Ｍｏｈａｍｍｅｄ ａｄｅｌ | Ｗｉｚｚｙ ꧂
+        </div>
+        <a href="https://wa.me/249128749239" target="_blank" class="whatsapp-link">
+            تواصل عبر واتساب ⚡ +249128749239
+        </a>
+        <p style="font-size: 10px; margin-top: 15px; opacity: 0.5;">جميع الحقوق محفوظة © 2026</p>
+    </div>
 </div>
 
 <script>
     function generateEmail() {
-        const phone = document.getElementById('phoneInput').value.trim();
+        const phone = document.getElementById('phoneInput').value.strip ? document.getElementById('phoneInput').value.strip() : document.getElementById('phoneInput').value.trim();
         
         if (!phone || phone.length < 9) {
-            alert("يا بطل، من فضلك اكتب الرقم أولاً!");
+            alert("يا بطل، اكتب رقمك المحظور أولاً!");
             return;
         }
 
@@ -149,13 +243,11 @@
 
 I am contacting you to report an issue I am facing after the latest WhatsApp update. When I try to log in to my WhatsApp account, I receive a message saying that login is currently unavailable for security reasons. We cannot allow you to log in at this time. I did not do anything unusual, nor did I receive any warnings or notifications about any security issues. 
 
-Please help resolve this issue and help me regain access to my account. I use WhatsApp on a daily basis, and I rely It is important to communicate with my friends and family. This problem causes me great problems and I ask you to solve it as soon as possible. I make sure that I am using the correct password, and that I am using the correct phone number. I have not tried to log in from any other device, and I have not tried to change the password Please check My account and checking for any security issues that may be causing this issue.
+Please help resolve this issue and help me regain access to my account. I use WhatsApp on a daily basis, and I rely It is important to communicate with my friends and family. This problem causes me great problems and I ask you to solve it as soon as possible. 
 
 My Phone Number: ${phone}`;
 
         const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        
-        // فتح الجيميل
         window.location.href = mailtoUrl;
     }
 </script>
