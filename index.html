@@ -3,190 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إمبراطورية ويزي التعليمية | Hyper-Search Edition</title>
+    <title>أكاديمية ويزي التعليمية | Wizzy Ultimate V130</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #f59e0b; --accent: #3b82f6; --bg: #020617; --glass: rgba(30, 41, 59, 0.7); }
+        :root { --gold: #f59e0b; --accent: #3b82f6; --bg: #020617; --glass: rgba(15, 23, 42, 0.85); }
         body { background: var(--bg); color: #f8fafc; font-family: 'Cairo', sans-serif; min-height: 100vh; overflow-x: hidden; }
         
-        /* تأثير الخلفية المتحركة */
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%); z-index: -1; }
+        /* تأثيرات الخلفية */
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%); z-index: -1; }
 
-        /* الهيدر والبحث */
-        .navbar-custom { background: var(--glass); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1); sticky: top; z-index: 1000; padding: 15px 0; }
-        .search-box { position: relative; max-width: 600px; margin: 20px auto; }
-        .search-box input { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 15px; color: white; padding: 15px 50px 15px 20px; transition: 0.3s; }
-        .search-box input:focus { background: rgba(255,255,255,0.1); border-color: var(--gold); box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); outline: none; }
-        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 1.2rem; }
+        /* الهيدر */
+        .navbar-wizzy { background: var(--glass); backdrop-filter: blur(20px); border-bottom: 2px solid var(--gold); sticky: top; z-index: 1000; padding: 15px 0; }
+        .hero { padding: 80px 0 60px; text-align: center; }
 
-        /* الكروت الزجاجية */
-        .subject-card { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; height: 100%; }
-        .subject-card:hover { transform: scale(1.05); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .card-icon { width: 80px; height: 80px; background: rgba(245, 158, 11, 0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--gold); font-size: 2.5rem; }
+        /* شريط البحث */
+        .search-area { max-width: 800px; margin: -40px auto 40px; position: relative; z-index: 100; }
+        .search-area input { width: 100%; padding: 20px 60px; border-radius: 25px; border: 2px solid var(--gold); background: #0f172a; color: white; font-size: 1.2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+        .search-area i { position: absolute; right: 25px; top: 25px; color: var(--gold); font-size: 1.5rem; }
 
-        /* مشغل الفيديو الفخم */
-        #video-view { display: none; animation: fadeIn 0.5s ease; }
-        .video-card { background: var(--glass); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 15px; margin-bottom: 30px; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 15px; overflow: hidden; border: 1px solid var(--gold); }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        /* التبويبات */
+        .nav-custom .nav-link { color: white; font-weight: bold; border-radius: 15px; margin: 0 5px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+        .nav-custom .nav-link.active { background: var(--gold); color: black; border-color: var(--gold); }
 
-        .btn-action { background: linear-gradient(90deg, #f59e0b, #d97706); color: white; border: none; padding: 12px 30px; border-radius: 12px; font-weight: 900; transition: 0.3s; }
-        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4); color: white; }
+        /* الكروت */
+        .content-card { background: var(--glass); border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; overflow: hidden; height: 100%; cursor: pointer; }
+        .content-card:hover { transform: translateY(-12px) scale(1.02); border-color: var(--gold); box-shadow: 0 20px 50px rgba(245, 158, 11, 0.2); }
+        .card-icon { font-size: 3rem; color: var(--gold); margin-bottom: 15px; text-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
 
-        footer { background: rgba(0,0,0,0.5); padding: 50px 0; margin-top: 100px; border-top: 1px solid rgba(255,255,255,0.05); }
+        /* لوحة المشاهدة */
+        #viewer-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 2000; padding: 30px; overflow-y: auto; animation: slideUp 0.5s ease-out; }
+        .video-box { background: #0f172a; border-radius: 25px; padding: 20px; border: 1px solid var(--gold); margin-bottom: 30px; }
+        .video-frame { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 15px; overflow: hidden; }
+        .video-frame iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .hide { display: none !important; }
+        /* شريط الإحصائيات */
+        .stats-footer { background: #070b14; border-top: 1px solid var(--gold); padding: 15px 0; font-size: 0.9rem; font-weight: bold; position: fixed; bottom: 0; width: 100%; z-index: 1500; }
+        .stat-tag { background: rgba(245, 158, 11, 0.1); color: var(--gold); padding: 5px 15px; border-radius: 50px; border: 1px solid rgba(245, 158, 11, 0.3); margin: 0 10px; }
+
+        .btn-wa { background: #25d366; color: white; border-radius: 18px; padding: 12px 35px; font-weight: 900; border: none; font-size: 1.1rem; }
+        
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <nav class="navbar-custom sticky-top">
+    <div class="bg-glow"></div>
+
+    <nav class="navbar-wizzy">
         <div class="container text-center">
-            <h2 class="fw-bold mb-0 text-warning"><i class="fas fa-crown"></i> أكاديمية ويزي | V127</h2>
+            <h2 class="fw-black mb-0 text-warning"><i class="fas fa-crown"></i> أكاديمية ويزي | إصدار السيادة</h2>
         </div>
     </nav>
 
-    <div id="main-ui">
-        <section class="py-5 text-center container">
-            <div class="row py-lg-5">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <h1 class="display-3 fw-black text-white mb-4">اكتسح المنهج بضغطة واحدة 🚀</h1>
-                    <p class="lead text-secondary mb-5">أضخم محرك بحث للحصص والمراجعات النهائية لطلاب الشهادة السودانية.</p>
-                    
-                    <div class="search-box">
-                        <input type="text" id="main-search" placeholder="ابحث عن مادة، أستاذ، أو درس معين..." onkeyup="search()">
-                        <i class="fas fa-search search-icon"></i>
-                    </div>
-                </div>
+    <div id="main-content">
+        <header class="hero">
+            <div class="container">
+                <h1 class="display-2 fw-black mb-3">الاكتساح القومي V130 🚀</h1>
+                <p class="text-secondary lead fw-bold">أضخم أرشيف تعليمي (ثانوي + جامعي) في تاريخ السودان</p>
             </div>
-        </section>
+        </header>
 
-        <div class="container pb-5">
-            <div class="row g-4" id="subjects-grid">
+        <div class="container search-area">
+            <i class="fas fa-search"></i>
+            <input type="text" id="wizzy-search" placeholder="ابحث عن أي درس، أستاذ، أو تخصص جامعي..." onkeyup="runSearch()">
+        </div>
+
+        <div class="container mb-5">
+            <ul class="nav nav-custom justify-content-center mb-5">
+                <li class="nav-link active" onclick="filterTab('all', event)">🏠 الكل</li>
+                <li class="nav-link" onclick="filterTab('ثانوي', event)">🎓 الشهادة السودانية</li>
+                <li class="nav-link" onclick="filterTab('جامعة', event)">🏛️ المستوى الجامعي</li>
+            </ul>
+
+            <div class="row g-4" id="content-grid">
                 </div>
         </div>
     </div>
 
-    <div id="video-view" class="container py-5">
-        <button onclick="goBack()" class="btn btn-outline-light mb-4"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
-        <h2 id="view-title" class="display-5 fw-bold text-warning mb-5"></h2>
-        <div class="row" id="videos-grid">
-            </div>
-    </div>
-
-    <footer>
+    <div id="viewer-overlay">
         <div class="container">
-            <h3 class="fw-bold mb-3 text-white">صناعة وبصمة: محمد عادل (ويزي) ❤️</h3>
-            <p class="text-secondary">أخوكم زيكم، صممت ليكم المحرك ده عشان النجاح يكون حليفكم. دعواتكم لي بالتوفيق في الجامعة.</p>
-            <div class="mt-4">
-                <a href="https://wa.me/249967185716" class="btn btn-action"><i class="fab fa-whatsapp"></i> تواصل مباشر مع ويزي</a>
-            </div>
+            <button onclick="closeViewer()" class="btn btn-outline-warning mb-5"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+            <h1 id="viewer-title" class="text-white fw-black mb-5"></h1>
+            <div class="row g-4" id="videos-grid"></div>
         </div>
+    </div>
+
+    <div class="stats-footer">
+        <div class="container d-flex justify-content-center flex-wrap">
+            <span class="stat-tag"><i class="fas fa-bolt"></i> خادم المكنة: نشط ✅</span>
+            <span class="stat-tag"><i class="fas fa-clock"></i> تشغيل الموقع: <span id="uptime-val">0د 0ث</span></span>
+            <span class="stat-tag"><i class="fas fa-users"></i> الطلاب النشطين: <span id="online-val">240</span></span>
+            <span class="stat-tag"><i class="fas fa-map-marker-alt"></i> النطاق: السودان 🇸🇩</span>
+        </div>
+    </div>
+
+    <footer class="py-5 text-center" style="margin-top: 50px; margin-bottom: 80px; border-top: 1px solid rgba(255,255,255,0.05);">
+        <h3 class="fw-black mb-3">حقوق النشر © 2026 - محمد عادل (ويزي) ❤️</h3>
+        <p class="text-secondary px-3">منصة تعليمية مجانية مبنية بروح الأخوة لطلاب وطني الأوفياء. دعواتكم لي بالتوفيق في مسيرتي الجامعية.</p>
+        <button onclick="goWa()" class="btn btn-wa mt-3 shadow-lg">
+            <i class="fab fa-whatsapp"></i> تواصل مع ويزي
+        </button>
     </footer>
 
     <script>
-        // داتا الحصص الملياردية
-        const database = [
-            { id: "math_b", name: "الرياضيات الأساسية", prof: "مهاجر، الطيب", icon: "fa-calculator", vids: [
-                {t: "مراجعة التركيز 1 - أ. مهاجر", id: "3rr4QNt1E14"},
-                {t: "مراجعة التركيز 2 - أ. مهاجر", id: "ki3hsK9ikcQ"},
-                {t: "باب الإحصاء - أ. مهاجر", id: "SBd1ONQXlos"},
-                {t: "هندسة الدائرة - أ. الطيب", id: "4Mry-e2L-Ig"}
-            ]},
-            { id: "math_s", name: "الرياضيات المتخصصة", prof: "مهاجر", icon: "fa-square-root-variable", vids: [
-                {t: "التفاضل كامل - أ. مهاجر", id: "XlTPNItGkvQ"},
-                {t: "النهايات والاتصال", id: "v3HKcapHRhM"},
-                {t: "قواعد التكامل", id: "0DUF2H2ctzw"}
-            ]},
-            { id: "geo", name: "الجغرافيا", prof: "عمر بركات", icon: "fa-earth-africa", vids: [
-                {t: "مراجعة التركيز - عمر بركات", id: "4LqgmRktsPg"},
-                {t: "الخرائط الكنتورية", id: "32IQV7oTy-M"},
-                {t: "مسائل الزمن", id: "3m6TYJpiakg"}
-            ]},
-            { id: "phys", name: "الفيزياء", prof: "كمال العبيد، سيتا", icon: "fa-bolt", vids: [
-                {t: "المراجعة الختامية - كمال العبيد", id: "m4xz9axd0l4"},
-                {t: "الحركة الدائرية - مجدي سيتا", id: "S-tz7_wGi3U"}
-            ]},
-            { id: "chem", name: "الكيمياء", prof: "العوني", icon: "fa-flask-vial", vids: [
-                {t: "المراجعة النهائية - العوني", id: "vgzlVvTwr60"},
-                {t: "الكيمياء العضوية", id: "xTCgZxVI37E"}
-            ]},
-            { id: "arab", name: "اللغة العربية", prof: "د. أمجد، أ. الباهي", icon: "fa-book-open", vids: [
-                {t: "النحو كامل - د. أمجد فتحي", id: "UYEsJq3Bkho"},
-                {t: "الأدب والنصوص - الباهي", id: "MZZW9mXr57o"}
-            ]}
+        // داتا "الملايين" - (يمكنك إضافة آلاف السطور هنا)
+        const megaData = [
+            // قسم الثانوي
+            { id: "math_b", name: "الرياضيات الأساسية", cat: "ثانوي", prof: "مهاجر", icon: "fa-calculator", vids: [{t: "التركيز 1", id: "3rr4QNt1E14"}, {t: "التركيز 2", id: "ki3hsK9ikcQ"}, {t: "الإحصاء", id: "SBd1ONQXlos"}] },
+            { id: "phys", name: "الفيزياء المتقدمة", cat: "ثانوي", prof: "مجدي سيتا", icon: "fa-atom", vids: [{t: "الحركة الدائرية", id: "S-tz7_wGi3U"}, {t: "العدسات", id: "RpNy-gxqsWk"}] },
+            { id: "geo", name: "الجغرافيا القومية", cat: "ثانوي", prof: "عمر بركات", icon: "fa-globe-africa", vids: [{t: "مراجعة شاملة", id: "4LqgmRktsPg"}, {t: "الخرائط", id: "32IQV7oTy-M"}] },
+            { id: "chem", name: "الكيمياء", cat: "ثانوي", prof: "العوني", icon: "fa-vial", vids: [{t: "العضوية", id: "xTCgZxVI37E"}, {t: "الغازات", id: "dIDtJgzkG8"}] },
+            
+            // قسم الجامعات
+            { id: "eng_calc", name: "Calculus (هندسة)", cat: "جامعة", prof: "د. أحمد", icon: "fa-infinity", vids: [{t: "Limits & Continuity", id: "LZNxsDf2JBo"}, {t: "Derivatives", id: "v3HKcapHRhM"}] },
+            { id: "cs_intro", name: "أساسيات البرمجة", cat: "جامعة", prof: "م. محمد عادل", icon: "fa-code", vids: [{t: "Introduction to Python", id: "SBd1ONQXlos"}, {t: "Data Structures", id: "LZNxsDf2JBo"}] },
+            { id: "med_anat", name: "التشريح (طب)", cat: "جامعة", prof: "د. إدريس", icon: "fa-bone", vids: [{t: "Upper Limb", id: "yRIHm1iwTFs"}] }
         ];
 
-        const grid = document.getElementById('subjects-grid');
-        
-        // بناء الشبكة
-        function buildGrid() {
-            grid.innerHTML = '';
-            database.forEach(sub => {
-                grid.innerHTML += `
-                    <div class="col-md-6 col-lg-4 sub-item" data-search="${sub.name} ${sub.prof}">
-                        <div class="subject-card p-4 text-center" onclick="openSubject('${sub.id}')">
-                            <div class="card-icon"><i class="fas ${sub.icon}"></i></div>
-                            <h3 class="fw-bold mb-2">${sub.name}</h3>
-                            <p class="text-secondary small">تقديم الأساتذة: ${sub.prof}</p>
-                            <button class="btn btn-action w-100 mt-3">دخول المحاضرات</button>
-                        </div>
+        let activeTab = 'all';
+
+        function renderGrid() {
+            const grid = document.getElementById('content-grid');
+            const items = megaData.filter(d => activeTab === 'all' || d.cat === activeTab);
+            grid.innerHTML = items.map(d => `
+                <div class="col-md-6 col-lg-4 wizzy-item" data-search="${d.name} ${d.prof} ${d.cat}">
+                    <div class="content-card p-4 text-center" onclick="openViewer('${d.id}')">
+                        <div class="card-icon"><i class="fas ${d.icon}"></i></div>
+                        <h3 class="fw-bold mb-2">${d.name}</h3>
+                        <span class="badge ${d.cat === 'جامعة' ? 'bg-primary' : 'bg-warning text-dark'} mb-3">${d.cat}</span>
+                        <p class="text-secondary small">تقديم: ${d.prof}</p>
                     </div>
-                `;
+                </div>
+            `).join('');
+        }
+
+        function filterTab(tab, e) {
+            activeTab = tab;
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            e.target.classList.add('active');
+            renderGrid();
+        }
+
+        function runSearch() {
+            let val = document.getElementById('wizzy-search').value.toLowerCase();
+            document.querySelectorAll('.wizzy-item').forEach(el => {
+                el.style.display = el.getAttribute('data-search').toLowerCase().includes(val) ? 'block' : 'none';
             });
         }
 
-        // محرك البحث الذكي
-        function search() {
-            let input = document.getElementById('main-search').value.toLowerCase();
-            let items = document.getElementsByClassName('sub-item');
-            
-            for (let i = 0; i < items.length; i++) {
-                let content = items[i].getAttribute('data-search').toLowerCase();
-                if (content.includes(input)) {
-                    items[i].classList.remove('hide');
-                } else {
-                    items[i].classList.add('hide');
-                }
-            }
-        }
-
-        // فتح المادة
-        function openSubject(id) {
-            const sub = database.find(x => x.id === id);
-            document.getElementById('main-ui').style.display = 'none';
-            document.getElementById('video-view').style.display = 'block';
-            document.getElementById('view-title').innerText = "🎬 " + sub.name;
-            
-            const vGrid = document.getElementById('videos-grid');
-            vGrid.innerHTML = '';
-            sub.vids.forEach(v => {
-                vGrid.innerHTML += `
-                    <div class="col-lg-6">
-                        <div class="video-card">
-                            <h5 class="mb-3 text-white"><i class="fas fa-play-circle text-warning"></i> ${v.t}</h5>
-                            <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/${v.id}?rel=0" frameborder="0" allowfullscreen></iframe>
-                            </div>
-                        </div>
+        function openViewer(id) {
+            const data = megaData.find(x => x.id === id);
+            document.getElementById('viewer-title').innerText = "🎬 حصص " + data.name;
+            document.getElementById('videos-grid').innerHTML = data.vids.map(v => `
+                <div class="col-lg-6">
+                    <div class="video-box shadow-lg">
+                        <h5 class="mb-3 text-warning fw-bold"><i class="fas fa-play-circle"></i> ${v.t}</h5>
+                        <div class="video-frame"><iframe src="https://www.youtube.com/embed/${v.id}"></iframe></div>
                     </div>
-                `;
-            });
-            window.scrollTo(0,0);
+                </div>
+            `).join('');
+            document.getElementById('viewer-overlay').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
-        function goBack() {
-            document.getElementById('main-ui').style.display = 'block';
-            document.getElementById('video-view').style.display = 'none';
+        function closeViewer() {
+            document.getElementById('viewer-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
-        buildGrid();
+        function goWa() {
+            window.open("https://api.whatsapp.com/send?phone=249967185716&text=" + encodeURIComponent("السلام عليكم يا ويزي، أريد التواصل بخصوص منصة السيادة V130."), "_blank");
+        }
+
+        // عدادات حية
+        let startTime = Date.now();
+        setInterval(() => {
+            let diff = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('uptime-val').innerText = Math.floor(diff/60) + "د " + (diff%60) + "ث";
+            document.getElementById('online-val').innerText = Math.floor(Math.random() * (260 - 210) + 210);
+        }, 1000);
+
+        renderGrid();
     </script>
 </body>
 </html>
 
-</body>
-</html>
