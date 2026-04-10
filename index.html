@@ -2,150 +2,191 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إمبراطورية ويزي - V88</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إمبراطورية ويزي التعليمية | Hyper-Search Edition</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --neon: #00f2ff;
-            --green: #39ff14;
-            --dark: #0a0f14;
-        }
+        :root { --gold: #f59e0b; --accent: #3b82f6; --bg: #020617; --glass: rgba(30, 41, 59, 0.7); }
+        body { background: var(--bg); color: #f8fafc; font-family: 'Cairo', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        
+        /* تأثير الخلفية المتحركة */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%); z-index: -1; }
 
-        body {
-            background: var(--dark);
-            color: white;
-            font-family: system-ui, -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
+        /* الهيدر والبحث */
+        .navbar-custom { background: var(--glass); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1); sticky: top; z-index: 1000; padding: 15px 0; }
+        .search-box { position: relative; max-width: 600px; margin: 20px auto; }
+        .search-box input { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 15px; color: white; padding: 15px 50px 15px 20px; transition: 0.3s; }
+        .search-box input:focus { background: rgba(255,255,255,0.1); border-color: var(--gold); box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); outline: none; }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 1.2rem; }
 
-        .card {
-            background: rgba(23, 33, 43, 0.98);
-            padding: 30px 20px;
-            border-radius: 20px;
-            border: 1px solid var(--neon);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
-            text-align: center;
-            width: 85%;
-            max-width: 380px;
-        }
+        /* الكروت الزجاجية */
+        .subject-card { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; height: 100%; }
+        .subject-card:hover { transform: scale(1.05); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .card-icon { width: 80px; height: 80px; background: rgba(245, 158, 11, 0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--gold); font-size: 2.5rem; }
 
-        h1 {
-            color: var(--neon);
-            font-size: 24px;
-            text-shadow: 0 0 10px var(--neon);
-            margin: 10px 0;
-        }
+        /* مشغل الفيديو الفخم */
+        #video-view { display: none; animation: fadeIn 0.5s ease; }
+        .video-card { background: var(--glass); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 15px; margin-bottom: 30px; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 15px; overflow: hidden; border: 1px solid var(--gold); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        .crown { font-size: 45px; margin-bottom: 5px; display: block; }
+        .btn-action { background: linear-gradient(90deg, #f59e0b, #d97706); color: white; border: none; padding: 12px 30px; border-radius: 12px; font-weight: 900; transition: 0.3s; }
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4); color: white; }
 
-        input {
-            width: 100%;
-            padding: 15px;
-            background: #121922;
-            border: 1px solid var(--neon);
-            border-radius: 12px;
-            color: white;
-            font-size: 18px;
-            text-align: center;
-            margin: 20px 0;
-            outline: none;
-            box-sizing: border-box;
-        }
+        footer { background: rgba(0,0,0,0.5); padding: 50px 0; margin-top: 100px; border-top: 1px solid rgba(255,255,255,0.05); }
 
-        /* تحسين استجابة الكتابة */
-        input:focus { border-color: white; box-shadow: 0 0 10px var(--neon); }
-
-        .btn-send {
-            background: transparent;
-            color: var(--green);
-            border: 2px solid var(--green);
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-            transition: 0.2s;
-        }
-
-        .btn-send:active { transform: scale(0.95); background: var(--green); color: black; }
-
-        .footer {
-            margin-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 15px;
-        }
-
-        .dev-name {
-            color: #ff00ff;
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            display: block;
-            /* حركة خفيفة للاسم لا ترهق المعالج */
-            animation: moveText 8s linear infinite;
-        }
-
-        @keyframes moveText {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .wa-link {
-            color: var(--green);
-            text-decoration: none;
-            font-size: 12px;
-            display: inline-block;
-            margin-top: 10px;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hide { display: none !important; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <span class="crown">👑</span>
-    <h1>إمبراطورية ويزي</h1>
-    
-    <input type="tel" id="phone" placeholder="+249..." autocomplete="off">
-    
-    <button class="btn-send" onclick="send()">إرسال الطلب الملكي ✅</button>
+    <nav class="navbar-custom sticky-top">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-0 text-warning"><i class="fas fa-crown"></i> أكاديمية ويزي | V127</h2>
+        </div>
+    </nav>
 
-    <div class="footer">
-        <div class="dev-name">꧁ Ｍｏｈａｍｍｅｄ ａｄｅｌ | Ｗｉｚｚｙ ꧂</div>
-        <a href="https://wa.me/249128749239" class="wa-link">اتصل بالمطور ⚡</a>
+    <div id="main-ui">
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <h1 class="display-3 fw-black text-white mb-4">اكتسح المنهج بضغطة واحدة 🚀</h1>
+                    <p class="lead text-secondary mb-5">أضخم محرك بحث للحصص والمراجعات النهائية لطلاب الشهادة السودانية.</p>
+                    
+                    <div class="search-box">
+                        <input type="text" id="main-search" placeholder="ابحث عن مادة، أستاذ، أو درس معين..." onkeyup="search()">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container pb-5">
+            <div class="row g-4" id="subjects-grid">
+                </div>
+        </div>
     </div>
-</div>
 
-<script>
-    function send() {
-        const num = document.getElementById('phone').value.trim();
-        if(num.length < 9) { alert("أدخل الرقم أولاً يا بطل!"); return; }
+    <div id="video-view" class="container py-5">
+        <button onclick="goBack()" class="btn btn-outline-light mb-4"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        <h2 id="view-title" class="display-5 fw-bold text-warning mb-5"></h2>
+        <div class="row" id="videos-grid">
+            </div>
+    </div>
 
-        const email = "support@support.whatsapp.com";
-        const sub = "WhatsApp Login Problem Report";
+    <footer>
+        <div class="container">
+            <h3 class="fw-bold mb-3 text-white">صناعة وبصمة: محمد عادل (ويزي) ❤️</h3>
+            <p class="text-secondary">أخوكم زيكم، صممت ليكم المحرك ده عشان النجاح يكون حليفكم. دعواتكم لي بالتوفيق في الجامعة.</p>
+            <div class="mt-4">
+                <a href="https://wa.me/249967185716" class="btn btn-action"><i class="fab fa-whatsapp"></i> تواصل مباشر مع ويزي</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // داتا الحصص الملياردية
+        const database = [
+            { id: "math_b", name: "الرياضيات الأساسية", prof: "مهاجر، الطيب", icon: "fa-calculator", vids: [
+                {t: "مراجعة التركيز 1 - أ. مهاجر", id: "3rr4QNt1E14"},
+                {t: "مراجعة التركيز 2 - أ. مهاجر", id: "ki3hsK9ikcQ"},
+                {t: "باب الإحصاء - أ. مهاجر", id: "SBd1ONQXlos"},
+                {t: "هندسة الدائرة - أ. الطيب", id: "4Mry-e2L-Ig"}
+            ]},
+            { id: "math_s", name: "الرياضيات المتخصصة", prof: "مهاجر", icon: "fa-square-root-variable", vids: [
+                {t: "التفاضل كامل - أ. مهاجر", id: "XlTPNItGkvQ"},
+                {t: "النهايات والاتصال", id: "v3HKcapHRhM"},
+                {t: "قواعد التكامل", id: "0DUF2H2ctzw"}
+            ]},
+            { id: "geo", name: "الجغرافيا", prof: "عمر بركات", icon: "fa-earth-africa", vids: [
+                {t: "مراجعة التركيز - عمر بركات", id: "4LqgmRktsPg"},
+                {t: "الخرائط الكنتورية", id: "32IQV7oTy-M"},
+                {t: "مسائل الزمن", id: "3m6TYJpiakg"}
+            ]},
+            { id: "phys", name: "الفيزياء", prof: "كمال العبيد، سيتا", icon: "fa-bolt", vids: [
+                {t: "المراجعة الختامية - كمال العبيد", id: "m4xz9axd0l4"},
+                {t: "الحركة الدائرية - مجدي سيتا", id: "S-tz7_wGi3U"}
+            ]},
+            { id: "chem", name: "الكيمياء", prof: "العوني", icon: "fa-flask-vial", vids: [
+                {t: "المراجعة النهائية - العوني", id: "vgzlVvTwr60"},
+                {t: "الكيمياء العضوية", id: "xTCgZxVI37E"}
+            ]},
+            { id: "arab", name: "اللغة العربية", prof: "د. أمجد، أ. الباهي", icon: "fa-book-open", vids: [
+                {t: "النحو كامل - د. أمجد فتحي", id: "UYEsJq3Bkho"},
+                {t: "الأدب والنصوص - الباهي", id: "MZZW9mXr57o"}
+            ]}
+        ];
+
+        const grid = document.getElementById('subjects-grid');
         
-        // الرسالة الطويلة حقتك (تم تحسينها عشان ما تفشل)
-        const body = `Hello WhatsApp Support,
+        // بناء الشبكة
+        function buildGrid() {
+            grid.innerHTML = '';
+            database.forEach(sub => {
+                grid.innerHTML += `
+                    <div class="col-md-6 col-lg-4 sub-item" data-search="${sub.name} ${sub.prof}">
+                        <div class="subject-card p-4 text-center" onclick="openSubject('${sub.id}')">
+                            <div class="card-icon"><i class="fas ${sub.icon}"></i></div>
+                            <h3 class="fw-bold mb-2">${sub.name}</h3>
+                            <p class="text-secondary small">تقديم الأساتذة: ${sub.prof}</p>
+                            <button class="btn btn-action w-100 mt-3">دخول المحاضرات</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
-I am contacting you to report an issue I am facing after the latest WhatsApp update. When I try to log in to my WhatsApp account, I receive a message saying that login is currently unavailable for security reasons. We cannot allow you to log in at this time.
+        // محرك البحث الذكي
+        function search() {
+            let input = document.getElementById('main-search').value.toLowerCase();
+            let items = document.getElementsByClassName('sub-item');
+            
+            for (let i = 0; i < items.length; i++) {
+                let content = items[i].getAttribute('data-search').toLowerCase();
+                if (content.includes(input)) {
+                    items[i].classList.remove('hide');
+                } else {
+                    items[i].classList.add('hide');
+                }
+            }
+        }
 
-Please help resolve this issue and help me regain access to my account.
+        // فتح المادة
+        function openSubject(id) {
+            const sub = database.find(x => x.id === id);
+            document.getElementById('main-ui').style.display = 'none';
+            document.getElementById('video-view').style.display = 'block';
+            document.getElementById('view-title').innerText = "🎬 " + sub.name;
+            
+            const vGrid = document.getElementById('videos-grid');
+            vGrid.innerHTML = '';
+            sub.vids.forEach(v => {
+                vGrid.innerHTML += `
+                    <div class="col-lg-6">
+                        <div class="video-card">
+                            <h5 class="mb-3 text-white"><i class="fas fa-play-circle text-warning"></i> ${v.t}</h5>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/${v.id}?rel=0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            window.scrollTo(0,0);
+        }
 
-My Phone Number: ${num}`;
+        function goBack() {
+            document.getElementById('main-ui').style.display = 'block';
+            document.getElementById('video-view').style.display = 'none';
+        }
 
-        // استخدام encodeURIComponent لضمان عدم فشل الرابط
-        const mailto = "mailto:" + email + "?subject=" + encodeURIComponent(sub) + "&body=" + encodeURIComponent(body);
-        
-        // محاولة الفتح
-        window.location.href = mailto;
-    }
-</script>
+        buildGrid();
+    </script>
+</body>
+</html>
 
 </body>
 </html>
