@@ -3,190 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية ويزي التعليمية | Wizzy Ultimate V130</title>
+    <title>أكاديمية ويزي | منصة الاكتساح السيادي</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #f59e0b; --accent: #3b82f6; --bg: #020617; --glass: rgba(15, 23, 42, 0.85); }
+        :root { --gold: #f59e0b; --bg: #020617; --card-bg: rgba(30, 41, 59, 0.7); }
         body { background: var(--bg); color: #f8fafc; font-family: 'Cairo', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        .navbar-wizzy { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border-bottom: 3px solid var(--gold); padding: 15px 0; sticky: top; z-index: 1000; }
+        .hero { padding: 50px 0; text-align: center; background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); }
         
-        /* تأثيرات الخلفية */
-        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%); z-index: -1; }
-
-        /* الهيدر */
-        .navbar-wizzy { background: var(--glass); backdrop-filter: blur(20px); border-bottom: 2px solid var(--gold); sticky: top; z-index: 1000; padding: 15px 0; }
-        .hero { padding: 80px 0 60px; text-align: center; }
-
-        /* شريط البحث */
-        .search-area { max-width: 800px; margin: -40px auto 40px; position: relative; z-index: 100; }
-        .search-area input { width: 100%; padding: 20px 60px; border-radius: 25px; border: 2px solid var(--gold); background: #0f172a; color: white; font-size: 1.2rem; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
-        .search-area i { position: absolute; right: 25px; top: 25px; color: var(--gold); font-size: 1.5rem; }
-
-        /* التبويبات */
-        .nav-custom .nav-link { color: white; font-weight: bold; border-radius: 15px; margin: 0 5px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
-        .nav-custom .nav-link.active { background: var(--gold); color: black; border-color: var(--gold); }
+        /* شريط البحث والتبويبات */
+        .search-area { max-width: 800px; margin: -40px auto 30px; position: relative; z-index: 100; }
+        .search-area input { width: 100%; padding: 18px 60px; border-radius: 30px; border: 3px solid var(--gold); background: #0f172a; color: white; font-size: 1.1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        .search-area i { position: absolute; right: 25px; top: 22px; color: var(--gold); font-size: 1.3rem; }
+        
+        .nav-tabs-custom { border: none; justify-content: center; margin-bottom: 40px; }
+        .nav-tabs-custom .nav-link { color: #94a3b8; font-weight: bold; border: 1px solid rgba(255,255,255,0.1); margin: 5px; border-radius: 15px; padding: 10px 25px; transition: 0.3s; }
+        .nav-tabs-custom .nav-link.active { background: var(--gold); color: #000; border-color: var(--gold); }
 
         /* الكروت */
-        .content-card { background: var(--glass); border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; overflow: hidden; height: 100%; cursor: pointer; }
-        .content-card:hover { transform: translateY(-12px) scale(1.02); border-color: var(--gold); box-shadow: 0 20px 50px rgba(245, 158, 11, 0.2); }
-        .card-icon { font-size: 3rem; color: var(--gold); margin-bottom: 15px; text-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
-
-        /* لوحة المشاهدة */
-        #viewer-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 2000; padding: 30px; overflow-y: auto; animation: slideUp 0.5s ease-out; }
-        .video-box { background: #0f172a; border-radius: 25px; padding: 20px; border: 1px solid var(--gold); margin-bottom: 30px; }
-        .video-frame { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 15px; overflow: hidden; }
-        .video-frame iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-        /* شريط الإحصائيات */
-        .stats-footer { background: #070b14; border-top: 1px solid var(--gold); padding: 15px 0; font-size: 0.9rem; font-weight: bold; position: fixed; bottom: 0; width: 100%; z-index: 1500; }
-        .stat-tag { background: rgba(245, 158, 11, 0.1); color: var(--gold); padding: 5px 15px; border-radius: 50px; border: 1px solid rgba(245, 158, 11, 0.3); margin: 0 10px; }
-
-        .btn-wa { background: #25d366; color: white; border-radius: 18px; padding: 12px 35px; font-weight: 900; border: none; font-size: 1.1rem; }
+        .content-card { background: var(--card-bg); border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; overflow: hidden; height: 100%; cursor: pointer; }
+        .content-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 15px 40px rgba(245, 158, 11, 0.3); }
         
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        /* المشغل */
+        #video-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 2000; padding: 20px; overflow-y: auto; }
+        .video-item { background: #0f172a; border-radius: 20px; padding: 15px; border: 1px solid var(--gold); margin-bottom: 25px; text-align: center; }
+        .video-frame { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; }
+        .video-frame iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .btn-download { background: var(--gold); color: #000; font-weight: 900; border-radius: 12px; padding: 10px; border: none; margin-top: 15px; width: 100%; }
+
+        /* العدادات */
+        .stats-bar { background: #070b14; border-top: 2px solid var(--gold); padding: 12px 0; font-size: 0.85rem; position: fixed; bottom: 0; width: 100%; z-index: 1500; font-weight: 900; }
+        .stat-badge { background: rgba(245, 158, 11, 0.1); color: var(--gold); padding: 5px 15px; border-radius: 50px; border: 1px solid rgba(245, 158, 11, 0.3); margin: 0 8px; }
+        footer { border-top: 1px solid rgba(255,255,255,0.05); margin-bottom: 80px; padding: 50px 0; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-
     <nav class="navbar-wizzy">
-        <div class="container text-center">
-            <h2 class="fw-black mb-0 text-warning"><i class="fas fa-crown"></i> أكاديمية ويزي | إصدار السيادة</h2>
-        </div>
+        <div class="container text-center"><h2 class="fw-black mb-0 text-warning"><i class="fas fa-crown"></i> إمبراطورية ويزي التعليمية</h2></div>
     </nav>
 
-    <div id="main-content">
+    <div id="main-view">
         <header class="hero">
-            <div class="container">
-                <h1 class="display-2 fw-black mb-3">الاكتساح القومي V130 🚀</h1>
-                <p class="text-secondary lead fw-bold">أضخم أرشيف تعليمي (ثانوي + جامعي) في تاريخ السودان</p>
-            </div>
+            <h1 class="display-4 fw-black text-white">منصة الاكتساح السيادي 🚀</h1>
+            <p class="text-secondary lead fw-bold">الأرشيف القومي الشامل لطلاب السودان</p>
         </header>
 
         <div class="container search-area">
             <i class="fas fa-search"></i>
-            <input type="text" id="wizzy-search" placeholder="ابحث عن أي درس، أستاذ، أو تخصص جامعي..." onkeyup="runSearch()">
+            <input type="text" id="wizzy-search" placeholder="ابحث عن مادة، أستاذ، أو تخصص جامعي..." onkeyup="filter()">
         </div>
 
         <div class="container mb-5">
-            <ul class="nav nav-custom justify-content-center mb-5">
-                <li class="nav-link active" onclick="filterTab('all', event)">🏠 الكل</li>
-                <li class="nav-link" onclick="filterTab('ثانوي', event)">🎓 الشهادة السودانية</li>
-                <li class="nav-link" onclick="filterTab('جامعة', event)">🏛️ المستوى الجامعي</li>
-            </ul>
-
-            <div class="row g-4" id="content-grid">
-                </div>
+            <nav class="nav nav-tabs-custom">
+                <button class="nav-link active" onclick="switchTab('ثانوي', this)">🎓 الشهادة السودانية</button>
+                <button class="nav-link" onclick="switchTab('جامعة', this)">🏛️ المستوى الجامعي</button>
+            </nav>
+            <div class="row g-4" id="grid"></div>
         </div>
     </div>
 
-    <div id="viewer-overlay">
+    <div id="video-overlay">
         <div class="container">
-            <button onclick="closeViewer()" class="btn btn-outline-warning mb-5"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
-            <h1 id="viewer-title" class="text-white fw-black mb-5"></h1>
-            <div class="row g-4" id="videos-grid"></div>
+            <button onclick="closeOverlay()" class="btn btn-outline-warning mb-4"><i class="fas fa-arrow-right"></i> العودة للقائمة</button>
+            <h2 id="view-title" class="text-white fw-black mb-5 text-center"></h2>
+            <div class="row g-4" id="v-list"></div>
         </div>
     </div>
 
-    <div class="stats-footer">
+    <div class="stats-bar text-center">
         <div class="container d-flex justify-content-center flex-wrap">
-            <span class="stat-tag"><i class="fas fa-bolt"></i> خادم المكنة: نشط ✅</span>
-            <span class="stat-tag"><i class="fas fa-clock"></i> تشغيل الموقع: <span id="uptime-val">0د 0ث</span></span>
-            <span class="stat-tag"><i class="fas fa-users"></i> الطلاب النشطين: <span id="online-val">240</span></span>
-            <span class="stat-tag"><i class="fas fa-map-marker-alt"></i> النطاق: السودان 🇸🇩</span>
+            <span class="stat-badge"><i class="fas fa-history"></i> Uptime: <span id="uptime">0د 0ث</span></span>
+            <span class="stat-badge"><i class="fas fa-users"></i> نشط الآن: <span id="online">...</span></span>
+            <span class="stat-badge"><i class="fas fa-shield-alt"></i> النطاق: السودان 🇸🇩</span>
         </div>
     </div>
 
-    <footer class="py-5 text-center" style="margin-top: 50px; margin-bottom: 80px; border-top: 1px solid rgba(255,255,255,0.05);">
-        <h3 class="fw-black mb-3">حقوق النشر © 2026 - محمد عادل (ويزي) ❤️</h3>
-        <p class="text-secondary px-3">منصة تعليمية مجانية مبنية بروح الأخوة لطلاب وطني الأوفياء. دعواتكم لي بالتوفيق في مسيرتي الجامعية.</p>
-        <button onclick="goWa()" class="btn btn-wa mt-3 shadow-lg">
-            <i class="fab fa-whatsapp"></i> تواصل مع ويزي
-        </button>
+    <footer>
+        <h4 class="fw-black text-white mb-3">جميع الحقوق محفوظة © 2026 - محمد عادل (ويزي) ❤️</h4>
+        <p class="text-secondary small px-3">بصمة تعليمية سيادية - دعواتكم لمحمد عادل في مسيرته الجامعية.</p>
+        <a href="https://api.whatsapp.com/send?phone=249967185716" class="btn btn-success fw-bold mt-2" target="_blank"><i class="fab fa-whatsapp"></i> تواصل مع ويزي</a>
     </footer>
 
     <script>
-        // داتا "الملايين" - (يمكنك إضافة آلاف السطور هنا)
-        const megaData = [
+        const data = [
             // قسم الثانوي
-            { id: "math_b", name: "الرياضيات الأساسية", cat: "ثانوي", prof: "مهاجر", icon: "fa-calculator", vids: [{t: "التركيز 1", id: "3rr4QNt1E14"}, {t: "التركيز 2", id: "ki3hsK9ikcQ"}, {t: "الإحصاء", id: "SBd1ONQXlos"}] },
-            { id: "phys", name: "الفيزياء المتقدمة", cat: "ثانوي", prof: "مجدي سيتا", icon: "fa-atom", vids: [{t: "الحركة الدائرية", id: "S-tz7_wGi3U"}, {t: "العدسات", id: "RpNy-gxqsWk"}] },
-            { id: "geo", name: "الجغرافيا القومية", cat: "ثانوي", prof: "عمر بركات", icon: "fa-globe-africa", vids: [{t: "مراجعة شاملة", id: "4LqgmRktsPg"}, {t: "الخرائط", id: "32IQV7oTy-M"}] },
-            { id: "chem", name: "الكيمياء", cat: "ثانوي", prof: "العوني", icon: "fa-vial", vids: [{t: "العضوية", id: "xTCgZxVI37E"}, {t: "الغازات", id: "dIDtJgzkG8"}] },
+            { id: "math", name: "الرياضيات", cat: "ثانوي", icon: "fa-calculator", vids: [{t: "التركيز 1", id: "3rr4QNt1E14"}, {t: "التركيز 2", id: "ki3hsK9ikcQ"}] },
+            { id: "phys", name: "الفيزياء", cat: "ثانوي", icon: "fa-bolt", vids: [{t: "الحركة الدائرية", id: "S-tz7_wGi3U"}] },
+            { id: "chem", name: "الكيمياء", cat: "ثانوي", icon: "fa-vial", vids: [{t: "العضوية", id: "xTCgZxVI37E"}] },
+            { id: "geo", name: "الجغرافيا", cat: "ثانوي", icon: "fa-earth-africa", vids: [{t: "مراجعة شاملة", id: "4LqgmRktsPg"}] },
+            { id: "arab", name: "العربية", cat: "ثانوي", icon: "fa-book", vids: [{t: "النحو", id: "UYEsJq3Bkho"}] },
             
-            // قسم الجامعات
-            { id: "eng_calc", name: "Calculus (هندسة)", cat: "جامعة", prof: "د. أحمد", icon: "fa-infinity", vids: [{t: "Limits & Continuity", id: "LZNxsDf2JBo"}, {t: "Derivatives", id: "v3HKcapHRhM"}] },
-            { id: "cs_intro", name: "أساسيات البرمجة", cat: "جامعة", prof: "م. محمد عادل", icon: "fa-code", vids: [{t: "Introduction to Python", id: "SBd1ONQXlos"}, {t: "Data Structures", id: "LZNxsDf2JBo"}] },
-            { id: "med_anat", name: "التشريح (طب)", cat: "جامعة", prof: "د. إدريس", icon: "fa-bone", vids: [{t: "Upper Limb", id: "yRIHm1iwTFs"}] }
+            // قسم الجامعة
+            { id: "cs", name: "علوم الحاسوب", cat: "جامعة", icon: "fa-code", vids: [{t: "بايثون", id: "SBd1ONQXlos"}, {t: "هياكل البيانات", id: "LZNxsDf2JBo"}] },
+            { id: "eng", name: "الهندسة", cat: "جامعة", icon: "fa-gears", vids: [{t: "الدوائر", id: "3rr4QNt1E14"}] },
+            { id: "med", name: "الطب", cat: "جامعة", icon: "fa-stethoscope", vids: [{t: "التشريح", id: "yRIHm1iwTFs"}] }
         ];
 
-        let activeTab = 'all';
+        let activeTab = 'ثانوي';
 
-        function renderGrid() {
-            const grid = document.getElementById('content-grid');
-            const items = megaData.filter(d => activeTab === 'all' || d.cat === activeTab);
-            grid.innerHTML = items.map(d => `
-                <div class="col-md-6 col-lg-4 wizzy-item" data-search="${d.name} ${d.prof} ${d.cat}">
-                    <div class="content-card p-4 text-center" onclick="openViewer('${d.id}')">
-                        <div class="card-icon"><i class="fas ${d.icon}"></i></div>
-                        <h3 class="fw-bold mb-2">${d.name}</h3>
-                        <span class="badge ${d.cat === 'جامعة' ? 'bg-primary' : 'bg-warning text-dark'} mb-3">${d.cat}</span>
-                        <p class="text-secondary small">تقديم: ${d.prof}</p>
+        function render() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = data.filter(d => d.cat === activeTab).map(d => `
+                <div class="col-md-6 col-lg-4 card-box" data-search="${d.name}">
+                    <div class="content-card p-4 text-center" onclick="openSub('${d.id}')">
+                        <div style="font-size: 2.5rem; color: var(--gold); margin-bottom: 15px;"><i class="fas ${d.icon}"></i></div>
+                        <h4 class="fw-bold mb-1">${d.name}</h4>
+                        <p class="text-secondary small mb-0">اضغط لاستعراض المئات</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        function filterTab(tab, e) {
+        function switchTab(tab, btn) {
             activeTab = tab;
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            e.target.classList.add('active');
-            renderGrid();
+            btn.classList.add('active');
+            render();
         }
 
-        function runSearch() {
+        function filter() {
             let val = document.getElementById('wizzy-search').value.toLowerCase();
-            document.querySelectorAll('.wizzy-item').forEach(el => {
+            document.querySelectorAll('.card-box').forEach(el => {
                 el.style.display = el.getAttribute('data-search').toLowerCase().includes(val) ? 'block' : 'none';
             });
         }
 
-        function openViewer(id) {
-            const data = megaData.find(x => x.id === id);
-            document.getElementById('viewer-title').innerText = "🎬 حصص " + data.name;
-            document.getElementById('videos-grid').innerHTML = data.vids.map(v => `
-                <div class="col-lg-6">
-                    <div class="video-box shadow-lg">
-                        <h5 class="mb-3 text-warning fw-bold"><i class="fas fa-play-circle"></i> ${v.t}</h5>
-                        <div class="video-frame"><iframe src="https://www.youtube.com/embed/${v.id}"></iframe></div>
-                    </div>
-                </div>
+        function openSub(id) {
+            const item = data.find(x => x.id === id);
+            document.getElementById('view-title').innerText = "🎬 " + item.name;
+            document.getElementById('v-list').innerHTML = item.vids.map(v => `
+                <div class="col-lg-6"><div class="video-item shadow-lg">
+                    <h5 class="text-warning fw-bold mb-3"><i class="fas fa-play"></i> ${v.t}</h5>
+                    <div class="video-frame"><iframe src="https://www.youtube.com/embed/${v.id}"></iframe></div>
+                    <button onclick="dl('${v.id}')" class="btn-download"><i class="fas fa-download"></i> اقتناء الحصة MP4</button>
+                </div></div>
             `).join('');
-            document.getElementById('viewer-overlay').style.display = 'block';
+            document.getElementById('video-overlay').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
 
-        function closeViewer() {
-            document.getElementById('viewer-overlay').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        function dl(id) { window.open(`https://api.ytconvert.org/api/download?url=https://www.youtube.com/watch?v=${id}`, '_blank'); }
+        function closeOverlay() { document.getElementById('video-overlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-        function goWa() {
-            window.open("https://api.whatsapp.com/send?phone=249967185716&text=" + encodeURIComponent("السلام عليكم يا ويزي، أريد التواصل بخصوص منصة السيادة V130."), "_blank");
-        }
-
-        // عدادات حية
-        let startTime = Date.now();
+        let start = Date.now();
         setInterval(() => {
-            let diff = Math.floor((Date.now() - startTime) / 1000);
-            document.getElementById('uptime-val').innerText = Math.floor(diff/60) + "د " + (diff%60) + "ث";
-            document.getElementById('online-val').innerText = Math.floor(Math.random() * (260 - 210) + 210);
+            let diff = Math.floor((Date.now() - start) / 1000);
+            document.getElementById('uptime').innerText = Math.floor(diff/60) + "د " + (diff%60) + "ث";
+            document.getElementById('online').innerText = Math.floor(Math.random() * (32 - 14) + 14);
         }, 1000);
 
-        renderGrid();
+        render();
     </script>
 </body>
 </html>
-
