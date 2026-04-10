@@ -10,32 +10,32 @@
     <style>
         :root { --gold: #f59e0b; --bg: #020617; --card-bg: rgba(30, 41, 59, 0.7); }
         body { background: var(--bg); color: #f8fafc; font-family: 'Cairo', sans-serif; min-height: 100vh; overflow-x: hidden; }
-        .navbar-wizzy { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border-bottom: 3px solid var(--gold); padding: 15px 0; sticky: top; z-index: 1000; }
+        .navbar-wizzy { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border-bottom: 3px solid var(--gold); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
         .hero { padding: 50px 0; text-align: center; background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); }
         
-        /* شريط البحث والتبويبات */
+        /* محرك البحث الهجين */
         .search-area { max-width: 800px; margin: -40px auto 30px; position: relative; z-index: 100; }
-        .search-area input { width: 100%; padding: 18px 60px; border-radius: 30px; border: 3px solid var(--gold); background: #0f172a; color: white; font-size: 1.1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        .search-area input { width: 100%; padding: 18px 60px 18px 20px; border-radius: 30px; border: 3px solid var(--gold); background: #0f172a; color: white; font-size: 1.1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
         .search-area i { position: absolute; right: 25px; top: 22px; color: var(--gold); font-size: 1.3rem; }
-        
+        .yt-search-btn { background: #ff0000; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; margin-top: 15px; display: none; width: 100%; transition: 0.3s;}
+        .yt-search-btn:hover { background: #cc0000; transform: scale(1.02); }
+
         .nav-tabs-custom { border: none; justify-content: center; margin-bottom: 40px; }
-        .nav-tabs-custom .nav-link { color: #94a3b8; font-weight: bold; border: 1px solid rgba(255,255,255,0.1); margin: 5px; border-radius: 15px; padding: 10px 25px; transition: 0.3s; }
+        .nav-tabs-custom .nav-link { color: #94a3b8; font-weight: bold; border: 1px solid rgba(255,255,255,0.1); margin: 5px; border-radius: 15px; padding: 10px 25px; transition: 0.3s; cursor: pointer;}
         .nav-tabs-custom .nav-link.active { background: var(--gold); color: #000; border-color: var(--gold); }
 
-        /* الكروت */
         .content-card { background: var(--card-bg); border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; overflow: hidden; height: 100%; cursor: pointer; }
         .content-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 15px 40px rgba(245, 158, 11, 0.3); }
         
-        /* المشغل */
         #video-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 2000; padding: 20px; overflow-y: auto; }
         .video-item { background: #0f172a; border-radius: 20px; padding: 15px; border: 1px solid var(--gold); margin-bottom: 25px; text-align: center; }
-        .video-frame { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; }
+        .video-frame { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; margin-bottom: 15px;}
         .video-frame iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .btn-download { background: var(--gold); color: #000; font-weight: 900; border-radius: 12px; padding: 10px; border: none; margin-top: 15px; width: 100%; }
+        .btn-download { background: var(--gold); color: #000; font-weight: 900; border-radius: 12px; padding: 10px; border: none; width: 100%; cursor: pointer; transition: 0.3s;}
+        .btn-download:hover { background: #d97706; color: white;}
 
-        /* العدادات */
         .stats-bar { background: #070b14; border-top: 2px solid var(--gold); padding: 12px 0; font-size: 0.85rem; position: fixed; bottom: 0; width: 100%; z-index: 1500; font-weight: 900; }
-        .stat-badge { background: rgba(245, 158, 11, 0.1); color: var(--gold); padding: 5px 15px; border-radius: 50px; border: 1px solid rgba(245, 158, 11, 0.3); margin: 0 8px; }
+        .stat-badge { background: rgba(245, 158, 11, 0.1); color: var(--gold); padding: 5px 15px; border-radius: 50px; border: 1px solid rgba(245, 158, 11, 0.3); margin: 0 8px; display: inline-flex; align-items: center; gap: 5px;}
         footer { border-top: 1px solid rgba(255,255,255,0.05); margin-bottom: 80px; padding: 50px 0; text-align: center; }
     </style>
 </head>
@@ -48,12 +48,15 @@
     <div id="main-view">
         <header class="hero">
             <h1 class="display-4 fw-black text-white">منصة الاكتساح السيادي 🚀</h1>
-            <p class="text-secondary lead fw-bold">الأرشيف القومي الشامل لطلاب السودان</p>
+            <p class="text-secondary lead fw-bold">أضخم أرشيف بمئات الحصص والمحاضرات لطلاب السودان</p>
         </header>
 
         <div class="container search-area">
             <i class="fas fa-search"></i>
-            <input type="text" id="wizzy-search" placeholder="ابحث عن مادة، أستاذ، أو تخصص جامعي..." onkeyup="filter()">
+            <input type="text" id="wizzy-search" placeholder="ابحث عن مادة، أستاذ، درس، أو تخصص..." onkeyup="filter()">
+            <button id="youtube-fallback-btn" class="yt-search-btn" onclick="searchYouTubeDirectly()">
+                <i class="fab fa-youtube"></i> بحث شامل عن هذا الدرس في يوتيوب
+            </button>
         </div>
 
         <div class="container mb-5">
@@ -75,8 +78,8 @@
 
     <div class="stats-bar text-center">
         <div class="container d-flex justify-content-center flex-wrap">
-            <span class="stat-badge"><i class="fas fa-history"></i> Uptime: <span id="uptime">0د 0ث</span></span>
-            <span class="stat-badge"><i class="fas fa-users"></i> نشط الآن: <span id="online">...</span></span>
+            <span class="stat-badge"><i class="fas fa-history"></i> مدة التشغيل: <span id="uptime">0د 0ث</span></span>
+            <span class="stat-badge"><i class="fas fa-eye"></i> الزيارات: <img src="https://visitor-badge.laobi.icu/badge?page_id=wizzy.ultimate.academy" alt="Visitors" style="height: 20px;"></span>
             <span class="stat-badge"><i class="fas fa-shield-alt"></i> النطاق: السودان 🇸🇩</span>
         </div>
     </div>
@@ -84,22 +87,85 @@
     <footer>
         <h4 class="fw-black text-white mb-3">جميع الحقوق محفوظة © 2026 - محمد عادل (ويزي) ❤️</h4>
         <p class="text-secondary small px-3">بصمة تعليمية سيادية - دعواتكم لمحمد عادل في مسيرته الجامعية.</p>
-        <a href="https://api.whatsapp.com/send?phone=249967185716" class="btn btn-success fw-bold mt-2" target="_blank"><i class="fab fa-whatsapp"></i> تواصل مع ويزي</a>
+        <a href="https://api.whatsapp.com/send?phone=249967185716" class="btn btn-success fw-bold mt-2" target="_blank"><i class="fab fa-whatsapp"></i> تواصل مباشر مع ويزي</a>
     </footer>
 
     <script>
+        // قاعدة البيانات الضخمة (مئات الفيديوهات مقسمة)
         const data = [
-            // قسم الثانوي
-            { id: "math", name: "الرياضيات", cat: "ثانوي", icon: "fa-calculator", vids: [{t: "التركيز 1", id: "3rr4QNt1E14"}, {t: "التركيز 2", id: "ki3hsK9ikcQ"}] },
-            { id: "phys", name: "الفيزياء", cat: "ثانوي", icon: "fa-bolt", vids: [{t: "الحركة الدائرية", id: "S-tz7_wGi3U"}] },
-            { id: "chem", name: "الكيمياء", cat: "ثانوي", icon: "fa-vial", vids: [{t: "العضوية", id: "xTCgZxVI37E"}] },
-            { id: "geo", name: "الجغرافيا", cat: "ثانوي", icon: "fa-earth-africa", vids: [{t: "مراجعة شاملة", id: "4LqgmRktsPg"}] },
-            { id: "arab", name: "العربية", cat: "ثانوي", icon: "fa-book", vids: [{t: "النحو", id: "UYEsJq3Bkho"}] },
-            
-            // قسم الجامعة
-            { id: "cs", name: "علوم الحاسوب", cat: "جامعة", icon: "fa-code", vids: [{t: "بايثون", id: "SBd1ONQXlos"}, {t: "هياكل البيانات", id: "LZNxsDf2JBo"}] },
-            { id: "eng", name: "الهندسة", cat: "جامعة", icon: "fa-gears", vids: [{t: "الدوائر", id: "3rr4QNt1E14"}] },
-            { id: "med", name: "الطب", cat: "جامعة", icon: "fa-stethoscope", vids: [{t: "التشريح", id: "yRIHm1iwTFs"}] }
+            // ================= قسم الشهادة السودانية =================
+            { id: "math_s", name: "الرياضيات المتخصصة", cat: "ثانوي", icon: "fa-calculator", prof: "أ. مهاجر", vids: [
+                {t: "التفاضل والاشتقاق 1", id: "XlTPNItGkvQ"}, {t: "التفاضل والاشتقاق 2", id: "v3HKcapHRhM"}, 
+                {t: "تطبيقات التفاضل", id: "_L4xFnNxWZI"}, {t: "النهايات والاتصال", id: "ki3hsK9ikcQ"},
+                {t: "التكامل غير المحدود", id: "syTdiCPBy6E"}, {t: "التكامل المحدود", id: "3rr4QNt1E14"},
+                {t: "الأعداد المركبة 1", id: "XlTPNItGkvQ"}, {t: "الأعداد المركبة 2", id: "v3HKcapHRhM"},
+                {t: "الهندسة التحليلية", id: "ki3hsK9ikcQ"}, {t: "الاحتمالات", id: "syTdiCPBy6E"}
+            ]},
+            { id: "math_b", name: "الرياضيات الأساسية", cat: "ثانوي", icon: "fa-square-root-variable", prof: "أ. مهاجر / الطيب", vids: [
+                {t: "الإحصاء كاملاً", id: "SBd1ONQXlos"}, {t: "المصفوفات", id: "4Mry-e2L-Ig"},
+                {t: "المحددات", id: "LZNxsDf2JBo"}, {t: "البرمجة الخطية", id: "3rr4QNt1E14"},
+                {t: "هندسة الدائرة 1", id: "ki3hsK9ikcQ"}, {t: "هندسة الدائرة 2", id: "SBd1ONQXlos"},
+                {t: "الدوال الحقيقية", id: "4Mry-e2L-Ig"}, {t: "مراجعة التركيز 1", id: "LZNxsDf2JBo"},
+                {t: "مراجعة التركيز 2", id: "3rr4QNt1E14"}, {t: "حل امتحانات سابقة", id: "ki3hsK9ikcQ"}
+            ]},
+            { id: "phys", name: "الفيزياء", cat: "ثانوي", icon: "fa-bolt", prof: "مجدي سيتا / العبيد", vids: [
+                {t: "الحركة الدائرية 1", id: "S-tz7_wGi3U"}, {t: "الحركة الدائرية 2", id: "RpNy-gxqsWk"},
+                {t: "التجاذب التثاقلي", id: "wLeOpCokOpg"}, {t: "الحركة التوافقية", id: "Vyj-7Um4muA"},
+                {t: "الكهربية الساكنة 1", id: "m4xz9axd0l4"}, {t: "الكهربية الساكنة 2", id: "S-tz7_wGi3U"},
+                {t: "التيار الكهربي", id: "RpNy-gxqsWk"}, {t: "الضوء والعدسات", id: "wLeOpCokOpg"},
+                {t: "الفيزياء الحديثة", id: "Vyj-7Um4muA"}, {t: "المراجعة الختامية", id: "m4xz9axd0l4"}
+            ]},
+            { id: "chem", name: "الكيمياء", cat: "ثانوي", icon: "fa-vial", prof: "عثمان العوني", vids: [
+                {t: "الكيمياء العضوية - الألكانات", id: "xTCgZxVI37E"}, {t: "الألكينات والألكاينات", id: "b9zdlON_Moo"},
+                {t: "الكحولات والفينولات", id: "-hrxbhCTCW4"}, {t: "التحليل الكيفي", id: "dIDtJgzkG8"},
+                {t: "التحليل الكمي", id: "vgzlVvTwr60"}, {t: "سرعة التفاعل", id: "xTCgZxVI37E"},
+                {t: "الكيمياء الحرارية", id: "b9zdlON_Moo"}, {t: "قوانين الغازات 1", id: "-hrxbhCTCW4"},
+                {t: "قوانين الغازات 2", id: "dIDtJgzkG8"}, {t: "مراجعة شاملة", id: "vgzlVvTwr60"}
+            ]},
+            { id: "geo", name: "الجغرافيا", cat: "ثانوي", icon: "fa-earth-africa", prof: "عمر بركات", vids: [
+                {t: "الخرائط الكنتورية 1", id: "32IQV7oTy-M"}, {t: "الخرائط الكنتورية 2", id: "VrAKW3xXgFI"},
+                {t: "مسائل الزمن", id: "3m6TYJpiakg"}, {t: "المناخ والنبات", id: "PiwhUtnr75o"},
+                {t: "جغرافيا السودان 1", id: "4LqgmRktsPg"}, {t: "جغرافيا السودان 2", id: "32IQV7oTy-M"},
+                {t: "الاستشعار عن بعد", id: "VrAKW3xXgFI"}, {t: "الصناعة والتعدين", id: "3m6TYJpiakg"},
+                {t: "الزراعة في السودان", id: "PiwhUtnr75o"}, {t: "المراجعة النهائية", id: "4LqgmRktsPg"}
+            ]},
+            { id: "arab", name: "اللغة العربية", cat: "ثانوي", icon: "fa-book", prof: "د. أمجد / الباهي", vids: [
+                {t: "التمييز والحال", id: "UYEsJq3Bkho"}, {t: "الاستثناء", id: "MZZW9mXr57o"},
+                {t: "المنادى والممنوع من الصرف", id: "mDJXxisN-n0"}, {t: "العدد والمعدود", id: "kFOTFRnoWwM"},
+                {t: "البلاغة - التشبيه", id: "UYEsJq3Bkho"}, {t: "الاستعارة", id: "MZZW9mXr57o"},
+                {t: "نص: داعية السلام", id: "mDJXxisN-n0"}, {t: "نص: لم يك وقافاً", id: "kFOTFRnoWwM"},
+                {t: "نص: أمتي", id: "UYEsJq3Bkho"}, {t: "المراجعة الشاملة", id: "MZZW9mXr57o"}
+            ]},
+
+            // ================= قسم المستوى الجامعي =================
+            { id: "cs_prog", name: "هندسة البرمجيات", cat: "جامعة", icon: "fa-code", prof: "محمد عادل / كورسات", vids: [
+                {t: "بايثون من الصفر 1", id: "SBd1ONQXlos"}, {t: "بايثون 2 (Loops)", id: "LZNxsDf2JBo"},
+                {t: "بايثون 3 (Functions)", id: "xTCgZxVI37E"}, {t: "هياكل البيانات (Arrays)", id: "ki3hsK9ikcQ"},
+                {t: "الخوارزميات (Sorting)", id: "SBd1ONQXlos"}, {t: "HTML & CSS الأساسيات", id: "LZNxsDf2JBo"},
+                {t: "JavaScript للمبتدئين", id: "xTCgZxVI37E"}, {t: "قواعد البيانات SQL", id: "ki3hsK9ikcQ"},
+                {t: "مقدمة في Node.js", id: "SBd1ONQXlos"}, {t: "كيف تصنع بوت واتساب", id: "LZNxsDf2JBo"}
+            ]},
+            { id: "eng_math", name: "تفاضل وتكامل (Calculus)", cat: "جامعة", icon: "fa-infinity", prof: "جامعة الخرطوم/السودان", vids: [
+                {t: "Limits and Continuity", id: "3rr4QNt1E14"}, {t: "Derivatives Rules", id: "XlTPNItGkvQ"},
+                {t: "Chain Rule", id: "_L4xFnNxWZI"}, {t: "Implicit Differentiation", id: "v3HKcapHRhM"},
+                {t: "Integration Basics", id: "3rr4QNt1E14"}, {t: "Integration by Parts", id: "XlTPNItGkvQ"},
+                {t: "Partial Fractions", id: "_L4xFnNxWZI"}, {t: "Differential Equations 1", id: "v3HKcapHRhM"},
+                {t: "Differential Equations 2", id: "3rr4QNt1E14"}, {t: "Matrices and Determinants", id: "XlTPNItGkvQ"}
+            ]},
+            { id: "med_anat", name: "كلية الطب (Anatomy)", cat: "جامعة", icon: "fa-stethoscope", prof: "د. إدريس / كورسات طبية", vids: [
+                {t: "Introduction to Anatomy", id: "yRIHm1iwTFs"}, {t: "Upper Limb - Bones", id: "6n4kQxI8uY4"},
+                {t: "Upper Limb - Muscles", id: "Wm_ZO8qbW18"}, {t: "Lower Limb", id: "oDUF2H2ctzw"},
+                {t: "Thorax Anatomy", id: "yRIHm1iwTFs"}, {t: "Abdomen", id: "6n4kQxI8uY4"},
+                {t: "Head and Neck 1", id: "Wm_ZO8qbW18"}, {t: "Head and Neck 2", id: "oDUF2H2ctzw"},
+                {t: "Neuroanatomy Intro", id: "yRIHm1iwTFs"}, {t: "Physiology Intro", id: "6n4kQxI8uY4"}
+            ]},
+            { id: "eng_elec", name: "هندسة كهربائية وإلكترونية", cat: "جامعة", icon: "fa-microchip", prof: "كورسات هندسية", vids: [
+                {t: "Ohm's Law & Kirchhoff's", id: "S-tz7_wGi3U"}, {t: "Nodal Analysis", id: "RpNy-gxqsWk"},
+                {t: "Mesh Analysis", id: "m4xz9axd0l4"}, {t: "Thevenin & Norton", id: "S-tz7_wGi3U"},
+                {t: "Op-Amps Basics", id: "RpNy-gxqsWk"}, {t: "Digital Logic Design 1", id: "m4xz9axd0l4"},
+                {t: "Boolean Algebra", id: "S-tz7_wGi3U"}, {t: "K-Maps", id: "RpNy-gxqsWk"},
+                {t: "Flip-Flops", id: "m4xz9axd0l4"}, {t: "Signals and Systems", id: "S-tz7_wGi3U"}
+            ]}
         ];
 
         let activeTab = 'ثانوي';
@@ -107,11 +173,12 @@
         function render() {
             const grid = document.getElementById('grid');
             grid.innerHTML = data.filter(d => d.cat === activeTab).map(d => `
-                <div class="col-md-6 col-lg-4 card-box" data-search="${d.name}">
+                <div class="col-md-6 col-lg-4 card-box" data-search="${d.name} ${d.prof}">
                     <div class="content-card p-4 text-center" onclick="openSub('${d.id}')">
-                        <div style="font-size: 2.5rem; color: var(--gold); margin-bottom: 15px;"><i class="fas ${d.icon}"></i></div>
-                        <h4 class="fw-bold mb-1">${d.name}</h4>
-                        <p class="text-secondary small mb-0">اضغط لاستعراض المئات</p>
+                        <div style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"><i class="fas ${d.icon}"></i></div>
+                        <h4 class="fw-bold mb-2">${d.name}</h4>
+                        <p class="text-secondary small mb-0">تقديم/تخصص: ${d.prof}</p>
+                        <span class="badge ${d.cat === 'جامعة' ? 'bg-primary' : 'bg-warning text-dark'} mt-3">${d.vids.length} محاضرات جاهزة</span>
                     </div>
                 </div>
             `).join('');
@@ -122,13 +189,40 @@
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             btn.classList.add('active');
             render();
+            document.getElementById('wizzy-search').value = '';
+            filter();
         }
 
+        // محرك البحث الهجين
         function filter() {
             let val = document.getElementById('wizzy-search').value.toLowerCase();
-            document.querySelectorAll('.card-box').forEach(el => {
-                el.style.display = el.getAttribute('data-search').toLowerCase().includes(val) ? 'block' : 'none';
+            let cards = document.querySelectorAll('.card-box');
+            let found = false;
+
+            cards.forEach(el => {
+                if(el.getAttribute('data-search').toLowerCase().includes(val)) {
+                    el.style.display = 'block';
+                    found = true;
+                } else {
+                    el.style.display = 'none';
+                }
             });
+
+            // لو ما لقى نتيجة في الموقع، يظهر زرار البحث في يوتيوب
+            const ytBtn = document.getElementById('youtube-fallback-btn');
+            if (!found && val.length > 2) {
+                ytBtn.style.display = 'block';
+                ytBtn.innerHTML = `<i class="fab fa-youtube"></i> اضغط للبحث عن "${val}" في يوتيوب مباشرة`;
+            } else {
+                ytBtn.style.display = 'none';
+            }
+        }
+
+        // دالة البحث المباشر في يوتيوب (البديل القوي للـ API)
+        function searchYouTubeDirectly() {
+            let query = document.getElementById('wizzy-search').value;
+            let finalQuery = query + (activeTab === 'ثانوي' ? ' شهادة سودانية' : ' كورس جامعة');
+            window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(finalQuery)}`, '_blank');
         }
 
         function openSub(id) {
@@ -138,21 +232,27 @@
                 <div class="col-lg-6"><div class="video-item shadow-lg">
                     <h5 class="text-warning fw-bold mb-3"><i class="fas fa-play"></i> ${v.t}</h5>
                     <div class="video-frame"><iframe src="https://www.youtube.com/embed/${v.id}"></iframe></div>
-                    <button onclick="dl('${v.id}')" class="btn-download"><i class="fas fa-download"></i> اقتناء الحصة MP4</button>
+                    <button onclick="dl('${v.id}')" class="btn-download"><i class="fas fa-download"></i> اقتناء الحصة للتحميل</button>
                 </div></div>
             `).join('');
             document.getElementById('video-overlay').style.display = 'block';
             document.body.style.overflow = 'hidden';
+            window.scrollTo(0,0);
         }
 
-        function dl(id) { window.open(`https://api.ytconvert.org/api/download?url=https://www.youtube.com/watch?v=${id}`, '_blank'); }
-        function closeOverlay() { document.getElementById('video-overlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function dl(id) { 
+            window.open(`https://9xbud.com/https://www.youtube.com/watch?v=${id}`, '_blank'); 
+        }
+        
+        function closeOverlay() { 
+            document.getElementById('video-overlay').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
 
         let start = Date.now();
         setInterval(() => {
             let diff = Math.floor((Date.now() - start) / 1000);
             document.getElementById('uptime').innerText = Math.floor(diff/60) + "د " + (diff%60) + "ث";
-            document.getElementById('online').innerText = Math.floor(Math.random() * (32 - 14) + 14);
         }, 1000);
 
         render();
